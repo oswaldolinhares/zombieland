@@ -18,7 +18,7 @@ class ApplicationController < ActionController::API
     content_type_header = request.headers['Content-Type']
 
     unless content_type_header&.include?(MIME_TYPE_JSON_API)
-      return render json: { error: 'Unsupported Media Type' }, status: :unsupported_media_type
+      render json: { error: 'Unsupported Media Type' }, status: :unsupported_media_type
     end
   end
 end
