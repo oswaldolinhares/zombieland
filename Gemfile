@@ -8,6 +8,7 @@ gem 'puma', '~> 4.1'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :test do
+  gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 4.0.1'
 end
 
