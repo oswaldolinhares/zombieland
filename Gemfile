@@ -14,16 +14,14 @@ group :test do
   gem 'shoulda-matchers'
 end
 
-group :development do
-  gem 'rubocop'
-end
-
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'faker'
 end
 
 group :development do
+  gem 'rubocop'
+  gem 'guard-rspec', require: false
   gem 'listen', '~> 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
