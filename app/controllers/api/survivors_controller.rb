@@ -16,7 +16,6 @@ class Api::SurvivorsController < ApplicationController
   end
 
   def survivor_params
-    puts params
     params.require(:survivor).permit(:name, :age, :gender, :latitude, :longitude)
   end
 end

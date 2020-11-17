@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe Api::SurvivorsController, type: :controller do
   before { set_default_headers }
 
-
   describe 'POST api.domain/survivors'
   context 'when params are correct' do
     let(:survivor) do
@@ -27,12 +26,21 @@ RSpec.describe Api::SurvivorsController, type: :controller do
         }
       }
     end
-    #let(:survivor_attributes) { attributes_for(:survivor).merge(inventory: attributes_for(:inventory)) }
-    #.merge({:item_family_id => ItemFamily.first.id})
+
     before { post :create, params: survivor }
 
-    it '' do
-      puts json_response
+    it { expect(response).to have_http_status(:created) }
+
+    it 'is expected to data attribute to include: id, type, and attributes' do
+      expect(json_data).to include(:id, :type, :attributes)
+    end
+
+    it 'is expected to attributes to include survivor data' do
+      expect(json_data_attributes).to include(:name, :age, :gender, :latitude, :longitude, :inventory)
+    end
+
+    it 'is expected to attributes to include survivor inventory data' do
+      expect(json_data_attributes[:inventory]).to include(:water, :food, :medication, :ammunition)
     end
   end
 
