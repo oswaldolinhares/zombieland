@@ -45,6 +45,48 @@ RSpec.describe Api::SurvivorsController, type: :controller do
   end
 
   context 'when params are incorrect' do
-  end
+    let(:survivor) do
+      {
+        'survivor' =>
+        {
+          'name' => '',
+          'age' => '25.0',
+          'gender' => '',
+          'latitude' => '-100',
+          'longitude' => '-200',
+          'inventory' =>
+          {
+            'water' => '-1',
+            'food' => '-2',
+            'medication' => '-3',
+            'ammunition' => '-1.0'
+          }
+        }
+      }
+    end
 
+    let(:error_response) do
+      { "name": ["can't be blank"],
+        "age": ['must be an integer'],
+        "gender": ["can't be blank"],
+        "latitude": ['must be greater than or equal to -90'],
+        "longitude": ['must be greater than or equal to -180'],
+        "items": [
+          {
+            "water": 'Quantity must be greater than or equal to 0',
+            "food": 'Quantity must be greater than or equal to 0',
+            "medication": 'Quantity must be greater than or equal to 0',
+            "ammunition": 'Quantity must be an integer'
+          }
+        ] }
+    end
+
+    before { post :create, params: survivor }
+
+    it { expect(response).to have_http_status(:unprocessable_entity) }
+
+    it 'is expected to data attribute to include: id, type, and attributes' do
+      expect(json_errors).to eq(error_response)
+    end
+  end
 end

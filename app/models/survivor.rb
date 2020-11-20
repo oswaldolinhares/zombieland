@@ -2,7 +2,7 @@
 
 # Survivor
 class Survivor < ApplicationRecord
-  has_one :inventory
+  has_one :inventory, dependent: :destroy
 
   enum gender: { male: 'male', female: 'female' }
 
